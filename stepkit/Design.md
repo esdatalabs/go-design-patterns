@@ -72,18 +72,18 @@ or a test fake — that decision is made once, in `main.go`, at wiring time.
     /discover
       step.go
       gateway.go
-      provider_k8s.go
+      k8s_provider.go
       step_test.go
     /query
       step.go
       gateway.go
-      provider_prometheus.go
-      provider_sql.go
+      prometheus_provider.go
+      sql_provider.go
       step_test.go
     /emitmetrics
       step.go
       gateway.go
-      provider_prometheus.go
+      prometheus_provider.go
       step_test.go
     /analyzekpi
       step.go                 <- pure logic, no Gateway needed
@@ -91,15 +91,15 @@ or a test fake — that decision is made once, in `main.go`, at wiring time.
     /remediate
       step.go
       gateway.go
-      provider_restart.go
-      provider_scale.go
-      provider_failover.go
+      restart_provider.go
+      scale_provider.go
+      failover_provider.go
       step_test.go
     /notify
       step.go
       gateway.go
-      provider_slack.go
-      provider_pagerduty.go
+      slack_provider.go
+      pagerduty_provider.go
       step_test.go
 
   /pipeline
@@ -196,7 +196,7 @@ by unit tests.
 1. Create `/internal/steps/<name>/`.
 2. Add `gateway.go` if the step needs anything from the outside world;
    skip it if the step is pure logic.
-3. Add `provider_*.go` implementing the Gateway, if any.
+3. Add `*_provider.go` implementing the Gateway, if any.
 4. Implement `Step` in `step.go` (`Name() string`, `Run(ctx, *pipeline.PipelineContext) error`).
 5. Add `step_test.go` with fakes for the Gateway and table-driven tests
    for any decision logic.
